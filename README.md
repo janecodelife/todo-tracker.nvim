@@ -1,5 +1,7 @@
 # todo-tracker.nvim 🔭
 
+[![Follow on X](https://img.shields.io/badge/Follow-@janecodelife-000000?style=for-the-badge&logo=x)](https://x.com/janecodelife)
+
 A lightweight, production-ready, and highly performant Neovim plugin written in Lua to seamlessly assign and List workspace tags (`TODO`, `FIXME`, `NOTE`) across all programming languages in a blink.
 
 Optimized for **Neovim 0.12+** and modern development environments (like Laravel, Next.js, etc.).
