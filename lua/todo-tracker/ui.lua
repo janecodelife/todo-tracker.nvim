@@ -1,7 +1,6 @@
 local config = require("todo-tracker.config")
 local M = {}
 
--- دالة مخصصة فقط لعمل Assign وتوليد التعليق تلقائياً مكان المؤشر
 function M.add_comment()
 	local choices = { "TODO", "FIXME", "NOTE" }
 
