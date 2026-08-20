@@ -14,7 +14,7 @@ Install the plugin using Neovim's native package manager layer (`vim.pack.add`).
 
 ```lua
 vim.pack.add({
-	"https://github.com/nvim-telescope/telescope.nvim", -- just for search
+	"https://github.com/nvim-telescope/telescope.nvim", -- required just for search
     "https://github.com/janecodelife/todo-tracker.nvim",
 })
 require("todo-tracker").setup({})
@@ -28,34 +28,42 @@ Drop this cleanly separated setup into your global Neovim config file (`init.lua
 
 ```lua
 vim.pack.add({
-	"https://github.com/nvim-telescope/telescope.nvim", -- just for search
+	"https://github.com/nvim-telescope/telescope.nvim", -- required just for search
 	"https://github.com/janecodelife/todo-tracker.nvim",
 })
 
-require("todo-tracker").setup({})
+-- save load plugin after install
+local status, todo_tracker = pcall(require, "todo-tracker")
 
-local tracker_ui = require("todo-tracker.ui")
-vim.keymap.set("n", "<leader>ta", tracker_ui.add_comment, { desc = "Add Todo/Fixme/Note Tag" })
+if status then
+	todo_tracker.setup({})
 
-local map = vim.keymap.set
-local builtin = require("telescope.builtin")
+	local tracker_ui = require("todo-tracker.ui")
+	vim.keymap.set("n", "<leader>ta", tracker_ui.add_comment, { desc = "Add Todo/Fixme/Note Tag" })
 
-local function search_todo(keyword)
-	builtin.live_grep({
-		default_text = "HERE:" .. keyword,
-		prompt_title = "Find Comments -> HERE:" .. keyword,
-	})
+	local map = vim.keymap.set
+	local builtin = require("telescope.builtin")
+
+	local function search_todo(keyword)
+		builtin.live_grep({
+			default_text = "HERE:" .. keyword,
+			prompt_title = "Find Comments -> HERE:" .. keyword,
+		})
+	end
+
+	map("n", "<leader>tt", function()
+		search_todo("TODO")
+	end, { desc = "List and jump to HERE:TODO" })
+
+	map("n", "<leader>tf", function()
+		search_todo("FIXME")
+	end, { desc = "List and jump to HERE:FIXME" })
+
+	map("n", "<leader>tn", function()
+		search_todo("NOTE")
+	end, { desc = "List and jump to HERE:NOTE" })
+else
 end
-
-map("n", "<leader>tt", function()
-	search_todo("TODO")
-end, { desc = "List and jump to HERE:TODO" })
-map("n", "<leader>tf", function()
-	search_todo("FIXME")
-end, { desc = "List and jump to HERE:FIXME" })
-map("n", "<leader>tn", function()
-	search_todo("NOTE")
-end, { desc = "List and jump to HERE:NOTE" })
 
 ```
 
