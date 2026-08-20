@@ -1,3 +1,4 @@
+-- lua/todo-tracker/ui.lua
 local config = require("todo-tracker.config")
 local M = {}
 
@@ -22,7 +23,11 @@ function M.add_comment()
 
 			local final_text
 			if comment_string and comment_string ~= "" then
-				final_text = string.format(comment_string, formatted_tag)
+				if comment_string:find("%%s") then
+					final_text = string.format(comment_string, formatted_tag)
+				else
+					final_text = comment_string .. " " .. formatted_tag
+				end
 			else
 				final_text = formatted_tag
 			end
