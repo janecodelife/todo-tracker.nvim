@@ -17,7 +17,6 @@ vim.pack.add({
 	"https://github.com/nvim-telescope/telescope.nvim", -- required just for search
     "https://github.com/janecodelife/todo-tracker.nvim",
 })
-require("todo-tracker").setup({})
 ```
 
 ---
